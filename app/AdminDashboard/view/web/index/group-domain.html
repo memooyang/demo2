@@ -1,0 +1,99 @@
+<?php $__block_uniqid = uniqid(); ?>
+<?php 
+$__uniqid1 = uniqid(); 
+$__uniqid2 = uniqid(); 
+$__uniqid3 = uniqid(); 
+$__uniqid4 = uniqid(); 
+?>
+<!--begin::Card-->
+<div class="card pt-4 mb-6 mb-xl-9"
+identity="{{$identity}}"
+block="{{$__block_uniqid}}"
+>
+
+	<!--begin::Layout-->
+	<div class="d-flex flex-column flex-xl-row-- flex-sm-row "
+	identity="{{$identity}}"
+	row="{{$row['id']}}"
+	this-id="{{$row['id']}}"
+	>
+		<!--begin::Content-->
+		<div class="flex-lg-row-fluid ms-lg-8">
+			<!--begin:::Tabs-->
+			<ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-8">
+				<!--begin:::Tab item-->
+				<li class="nav-item">
+			        <a class="nav-link w-100 btn btn-flex btn-active-light-primary active" data-bs-toggle="tab" href="#{{$__uniqid1}}">
+			            <span class="svg-icon fs-2"><svg>...</svg></span>
+			            <span class="d-flex flex-column align-items-start">
+			                <span class="fs-4 fw-bold">基本設定</span>
+			                <span class="fs-7">Base</span>
+			            </span>
+			        </a>
+				</li>
+				<!--end:::Tab item-->
+				<!--begin:::Tab item-->
+				<li class="nav-item">
+			        <a class="nav-link w-100 btn btn-flex btn-active-light-primary" data-bs-toggle="tab" href="#{{$__uniqid2}}">
+			            <span class="svg-icon fs-2"><svg>...</svg></span>
+			            <span class="d-flex flex-column align-items-start">
+			                <span class="fs-4 fw-bold">網域(開發站) </span>
+			                <span class="fs-7">Develope</span>
+			            </span>
+			        </a>
+				</li>
+				<!--end:::Tab item-->
+				<!--begin:::Tab item-->
+				<li class="nav-item">
+			        <a class="nav-link w-100 btn btn-flex btn-active-light-primary" data-bs-toggle="tab" href="#{{$__uniqid3}}">
+			            <span class="svg-icon fs-2"><svg>...</svg></span>
+			            <span class="d-flex flex-column align-items-start">
+			                <span class="fs-4 fw-bold">網域(測試站) </span>
+			                <span class="fs-7">Demo</span>
+			            </span>
+			        </a>
+				</li>
+				<!--end:::Tab item-->
+				<!--begin:::Tab item-->
+				<li class="nav-item">
+			        <a class="nav-link w-100 btn btn-flex btn-active-light-primary" data-bs-toggle="tab" href="#{{$__uniqid4}}">
+			            <span class="svg-icon fs-2"><svg>...</svg></span>
+			            <span class="d-flex flex-column align-items-start">
+			                <span class="fs-4 fw-bold">網域(正式站) </span>
+			                <span class="fs-7">Production</span>
+			            </span>
+			        </a>
+				</li>
+				<!--end:::Tab item-->
+			</ul>
+			<!--end:::Tabs-->
+			<!--begin:::Tab content-->
+			<div class="tab-content" id="myTabContent">
+				<!--begin:::Tab pane-->
+				<div class="tab-pane fade show active" id="{{$__uniqid1}}" role="tabpanel">
+					{{include file="web/index/group-domain/base" /}}
+				</div>
+				<!--end:::Tab pane-->
+				<!--begin:::Tab pane-->
+				<div class="tab-pane fade " id="{{$__uniqid2}}" role="tabpanel">
+					{{include file="web/index/group-domain/dev" /}}
+				</div>
+				<!--end:::Tab pane-->
+				<!--begin:::Tab pane-->
+				<div class="tab-pane fade" id="{{$__uniqid3}}" role="tabpanel">
+					{{include file="web/index/group-domain/demo" /}}
+				</div>
+				<!--end:::Tab pane-->
+				<!--begin:::Tab pane-->
+				<div class="tab-pane fade" id="{{$__uniqid4}}" role="tabpanel">
+					{{include file="web/index/group-domain/prod" /}}
+				</div>
+				<!--end:::Tab pane-->
+			</div>
+			<!--end:::Tab content-->
+		</div>
+		<!--end::Content-->
+	</div>
+	<!--end::Layout-->
+</div>
+<!--end::Card-->

@@ -1,0 +1,91 @@
+
+<!--begin::Card-->
+<div class="card pt-4 mb-6 mb-xl-9"
+identity="{{$identity}}"
+block="kt_tab_edit_content"
+>
+	<!--begin::Card body-->
+	<div class="card-body pt-0 pb-5">
+		<!--begin::Form-->
+		<form class="form">
+			<input type="hidden" name="id" value="{{$row['id']}}" />
+			<!--begin::Input group-->
+			<?php
+			$_params = [];
+			$_params['row'] = $row;
+			$_params['topic'] = '描述';
+			$_params['field'] = 'content';
+			$_params['editor-id'] = "content-{$identity}";
+			?>
+			{{include file="../view/form/textarea/editor/rich-full/inline.html" /}}
+			
+			<div class="d-flex justify-content-end">
+				<!--begin::Button-->
+				{{include file="../view/form/button/use/btnSubmit.html" /}}
+				<!--end::Button-->
+			</div>
+		</form>
+		<!--end::Form-->
+	</div>
+	<!--end::Card body-->
+</div>
+<!--end::Card-->
+
+<script>
+try{
+	let __this = {
+		instance:null,
+		init:function(){
+			let self = this;
+			self.instance = $('[identity="{{$identity}}"][block="kt_tab_edit_content"]');
+			self.initBtnSubmit();
+		},
+		initBtnSubmit:function(){
+			let self = this;
+			self.instance.find('[btnSubmit]').on('click',function(){
+				let $form = $(this).closest('form');
+				// let params = $form.serializeArray();
+				let $id = $form.find('[name="id"]');
+				let id = $id.val();
+				
+				//-----
+				let content = __plugins['ckeditor-rich-full'].getData('content-{{$identity}}');
+				
+				//-----
+				let params = {};
+				params['id'] = id;
+				params['content'] = content;
+                    
+				//-----
+			    let api = "/{{$apiModule}}/{{$thisController}}/Edit";
+		        $.ajax({
+		            type: "post",
+		            url: api,
+		            data: params,
+		            dataType:'json',
+		            async: true,
+            		headers:__mm['ajax'].getHeaders(),
+		            success: function(data){
+						self.data = data.data;
+						if (data.status == 'success') {
+							__plugins['alert'].success('更新成功');
+            				// __mm['content'].reload();
+						}else{
+							__plugins['alert'].error(data.message);
+						}
+		            },
+		            error: function(data){
+						console.error(data);
+						__plugins['alert'].error(data.message);
+		            },
+		            done: function(data){
+		            },
+		        });
+			})
+		},
+	}
+	__this.init();
+}catch(e){
+	console.error(e);
+}
+</script>

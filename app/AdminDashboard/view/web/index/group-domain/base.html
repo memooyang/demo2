@@ -1,0 +1,88 @@
+<?php $_block_uniqid = uniqid(); ?>
+<!--begin::Card-->
+<div class="card card-reset"
+identity="{{$identity}}"
+block="{{$_block_uniqid}}"
+>
+	<!--begin::Card body-->
+	<div class="card-body pt-0 pb-5">
+		<!--begin::Form-->
+		<form class="form">
+			<input type="hidden" name="id" value="{{$row['id']}}" />
+			<!--begin::Input group-->
+			<?php
+			$_params = [];
+			$_params['row'] = $row;
+			$_params['topic'] = '網域模式';
+			$_params['field'] = 'mode';
+			$_params['options'] = \Rdb\Web::$modes;
+			$_params['option_field'] = 'name';
+			$_params['plugins'] = 'select2-no_search';
+			?>
+			{{include file="../view/form/select/inline.html" /}}
+			<!--end::Input group-->
+			
+			<div class="d-flex justify-content-end">
+				<!--begin::Button-->
+				{{include file="../view/form/button/use/btnSubmit.html" /}}
+				<!--end::Button-->
+			</div>
+		</form>
+		<!--end::Form-->
+	</div>
+	<!--end::Card body-->
+</div>
+<!--end::Card-->
+
+<script>
+try{
+	let __this = {
+		instance:null,
+		init:function(){
+			let self = this;
+			self.instance = $('[identity="{{$identity}}"][block="{{$_block_uniqid}}"]');
+			self.initBtnSubmit();
+		},
+		initBtnSubmit:function(){
+			let self = this;
+			self.instance.find('[btnSubmit]').on('click',function(){
+				let $form = $(this).closest('form');
+				let params = $form.serializeArray();
+				
+                //-----
+                let $row = self.instance.closest('[row]');
+                let user_id = $row.attr('this-id');
+                    
+				//-----
+			    let api = "/{{$apiModule}}/{{$thisController}}/Edit";
+		        $.ajax({
+		            type: "post",
+		            url: api,
+		            data: params,
+		            dataType:'json',
+		            async: true,
+            		headers:__mm['ajax'].getHeaders(),
+		            success: function(data){
+						self.data = data.data;
+						if (data.status == 'success') {
+							__plugins['alert'].success('更新成功');
+            				// __mm['content'].reload();
+						}else{
+							__plugins['alert'].error(data.message);
+						}
+		            },
+		            error: function(data){
+						console.error(data);
+						__plugins['alert'].error(data.message);
+		            },
+		            done: function(data){
+		            },
+		        });
+			})
+		},
+	}
+	__this.init();
+}catch(e){
+	console.error(e);
+}
+</script>

@@ -1,0 +1,65 @@
+
+<!--begin::Modal - Add task-->
+<div class="modal fade" id="kt_modal_edit_avatar" tabindex="-1" aria-hidden="true"
+identity="{{$identity}}"
+>
+	<!--begin::Modal dialog-->
+	<div class="modal-dialog modal-dialog-centered mw-650px">
+		<!--begin::Modal content-->
+		<div class="modal-content">
+			<!--begin::Modal body-->
+			<div class="modal-body px-5 my-7">
+			</div>
+			<!--end::Modal body-->
+		</div>
+		<!--end::Modal content-->
+	</div>
+	<!--end::Modal dialog-->
+</div>
+<!--end::Modal - Add task-->
+
+<script>
+try{
+	let __this = {
+		instance:null,
+		instance_content:null,
+		init:function(){
+			let self = this;
+			self.instance = $('#kt_modal_edit_avatar[identity="{{$identity}}"]');
+			self.instance_content = self.instance.find('.modal-body');
+			self.instance.on('show.bs.modal', function (e) {
+				self.load();
+			})
+		},
+		load:function(){
+			let self = this;
+			
+			//-----
+			let params = {};
+			
+			//-----
+        	// __mm['loading'].show();
+		    let api = "/{{$htmlModule}}/{{$thisController}}/Avatar";
+	        $.ajax({
+	            type: "post",
+	            url: api,
+	            data: params,
+	            dataType:'html',
+	            async: true,
+            	headers:__mm['ajax'].getHeaders(),
+	            success: function(data){
+        			// __mm['loading'].hide();
+	            	self.instance_content.html(data);
+	            },
+	            error: function(data){
+	            },
+	            done: function(data){
+	            },
+	        });
+		},
+	}
+	__this.init();
+}catch(e){
+	console.error(e);
+}
+</script>

@@ -1,0 +1,90 @@
+
+
+<!--begin::Row-->
+<div 
+block="content-this"
+identity="{{$identity}}"
+>
+  <div class="row g-5 gx-xl-10 mb-5 mb-xl-10"
+  >
+    <!--begin::Col-->
+    <div class="col-xl-8">
+      <div class="row g-5 gx-xl-10 mb- mb-xl-"
+      >
+        <!--begin::Col-->
+        <div class="col-xl-12">
+          {{include file="dashboard/index/hello" /}}
+        </div>
+        <!--begin::Col-->
+        <div class="col-xl-6">
+          {{include file="dashboard/index/users-recent_new" /}}
+        </div>
+        <!--begin::Col-->
+        <div class="col-xl-6">
+          {{include file="dashboard/index/activities-recent_new" /}}
+        </div>
+      </div>
+    </div>
+    <!--end::Col-->
+    <!--begin::Col-->
+    <div class="col-xl-4">
+      {{include file="dashboard/index/quicklink" /}}
+    </div>
+    <!--end::Col-->
+  </div>
+  <!--end::Row-->
+
+  <!--begin::Row-->
+  <div class="row g-5 gx-xl-10 mb-5 mb-xl-10"
+  >
+    <!--begin::Col-->
+    <div class="col-xl-8">
+      {{include file="dashboard/index/orders-recent_new" /}}
+    </div>
+    <!--end::Col-->
+    <!--begin::Col-->
+    <div class="col-xl-4">
+      {{include file="dashboard/index/users-recent_hot" /}}
+    </div>
+    <!--end::Col-->
+  </div>
+  <!--end::Row-->
+  
+  <!--begin::Row-->
+  <div class="row g-5 gx-xl-10 mb-5 mb-xl-10"
+  >
+    <!--begin::Col-->
+    <div class="col-xl-8">
+      {{include file="dashboard/index/posts-recent_new" /}}
+    </div>
+    <!--end::Col-->
+    <!--begin::Col-->
+    <div class="col-xl-4">
+      {{include file="dashboard/index/TODO-quickstart" /}}
+      {{include file="dashboard/index/feedback" /}}
+    </div>
+    <!--end::Col-->
+  </div>
+  <!--end::Row-->
+
+</div>
+
+<script>
+try{
+  let __this = {
+    instance:null,
+    init:function(){
+      let self = this;
+      self.instance = $('[block="content-this"][identity="{{$identity}}"]');
+      self.initHeader();
+    },
+    initHeader:function(){
+      __mm['header'].setTitle('<?=$thisTitle?>', '<?=$thisUrl?>');
+      // __mm['header'].setBackTitle('', '<?=$thisBackUrl?>');
+    },
+  }
+  __this.init();
+}catch(e){
+  console.error(e);
+}
+</script>

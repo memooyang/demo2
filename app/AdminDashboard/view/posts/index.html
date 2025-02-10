@@ -1,0 +1,228 @@
+
+<!--begin::Card-->
+<div class="card"
+block="content-card"
+identity="{{$identity}}"
+>
+	<!--begin::Card header-->
+	<div class="card-header border-0 pt-6">
+		<!--begin::Card title-->
+		<div class="card-title">
+			{{include file="../view/rows/list-button/inputSearch.html" /}}
+		</div>
+		<!--begin::Card title-->
+		
+		<!--begin::Card toolbar-->
+		<div class="card-toolbar">
+			<!--begin::Toolbar-->
+			{{include file="../view/rows/list-button/btnSearch.html" /}}
+			<!--begin::Toolbar-->
+			<div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
+				<!--begin::Filter
+				-->
+				<button type="button" class="btn btn-light-primary btn-md me-3 " data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+					<i class="ki-duotone ki-filter fs-2">
+						<span class="path1"></span>
+						<span class="path2"></span>
+					</i>
+					進階搜尋
+				</button>
+				<!--begin::Menu 1-->
+				<div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true">
+					<!--begin::Header
+					<div class="px-7 py-5">
+						<div class="fs-5 text-gray-900 fw-bold">搜尋選項</div>
+					</div>
+					-->
+					<!--end::Header-->
+					<!--begin::Separator-->
+					<div class="separator border-gray-200"></div>
+					<!--end::Separator-->
+					<!--begin::Content-->
+					<div class="px-7 py-5" data-kt-user-table-filter="form">
+						<!--begin::Input group-->
+						<div class="mb-10 --d-none">
+							<label class="form-label fs-6 fw-semibold">資訊狀態</label>
+							<select class="form-select form-select-solid fw-bold select2-hidden-accessible" 
+							name="select-status"
+							identity="{{$identity}}"
+							>
+								<option value="status1" selected>啟用中</option>
+								<option value="all" >全部</option>
+								<option value="status0">已停用</option>
+								<option value="remove">已移除</option>
+							</select>
+						</div>
+						<!--end::Input group-->
+						<!--begin::Input group-->
+						<div class="mb-10 --d-none">
+							<label class="form-label fs-6 fw-semibold">分類</label>
+							<select class="form-select form-select-solid fw-bold select2-hidden-accessible" 
+							name="select-category_id"
+							identity="{{$identity}}"
+							>
+								<option value="" selected>全部</option>
+								<?php foreach($vars['rowsCategory'] as $category){ ?>
+								<option value="{{$category['id']}}" 
+								>{{$category['name']}}</option>
+								<?php } ?>
+							</select>
+						</div>
+						<!--end::Input group-->
+						{{include file="../view/rows/list-search/input-search_keyword.html" /}}
+						<!--begin::Actions-->
+						<div class="d-flex justify-content-end">
+							<button type="button" class="btn btn-primary fw-semibold px-6" data-kt-menu-dismiss="true" data-kt-user-table-filter="filter"
+							btnSearch
+							>套用條件</button>
+						</div>
+						<!--end::Actions-->
+					</div>
+					<!--end::Content-->
+				</div>
+				<!--end::Menu 1-->
+				<!--end::Filter-->
+				<!--begin::Add user
+				-->
+				<button type="button" class="btn btn-primary btn-md" data-bs-toggle="modal" data-bs-target="#kt_modal_add">
+				<i class="ki-duotone ki-plus fs-2"></i>新增</button>
+				<!--end::Add user-->
+			</div>
+			<!--end::Toolbar-->
+		</div>
+		<!--end::Card toolbar-->
+	</div>
+	<!--end::Card header-->
+	
+	<!--begin::Card body-->
+	<div class="card-body py-4">
+		<!--begin::Table-->
+		<div id="kt_table_users_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+			<div class="table-responsive"
+			block="content-datalist"
+			>
+			</div>
+		</div>
+		<!--end::Table-->
+	</div>
+	<!--end::Card body-->
+	{{include file="posts/index/kt_modal_add" /}}
+</div>
+<!--end::Card-->
+
+<script>
+try{
+	let __this = {
+		instance:null,
+		init:function(){
+			let self = this;
+			self.instance = $('[block="content-card"][identity="{{$identity}}"]');
+			__plugins['select2-no_search'].register('[name="select-status"][identity="{{$identity}}"]');
+			let select2_target = '[identity="{{$identity}}"][name="select-category_id"]';
+			__plugins['select2'].register(select2_target);
+			self.initBtnSearch();
+			self.initInputSearch();
+			self.doSearch();
+            self.initHeader();
+        },
+        initHeader:function(){
+        	// __mm['header'].setTitle('客戶', '/customer/index/index');
+            __mm['header'].setTitle('<?=$thisTitle?>', '<?=$thisUrl?>');
+        },
+		initBtnSearch:function(){
+			let self = this;
+			self.instance.find('[btnSearch]').on('click',function(){
+				self.doSearch();
+			})
+		},
+		initInputSearch:function(){
+			let self = this;
+			self.instance.find('[name="input-search"]').on('input',function(){
+				let $input = $(this);
+				let input_search = $input.val();
+                if(isEmpty(input_search) == false){ input_search = input_search.trim(); }
+				self.instance.find('[row]').each(function(i, row){
+                    let $row = $(row);
+                    // let school_id = $row.attr('right-school_id');
+                    let field1 = $row.attr('this-field1');
+                    let field2 = $row.attr('this-field2');
+                    let field3 = $row.attr('this-field3');
+                    let field4 = $row.attr('this-field4');
+                    if(typeof(field1) == undefined){ field1 = ''; }
+                    if(typeof(field2) == undefined){ field2 = ''; }
+                    if(typeof(field3) == undefined){ field3 = ''; }
+                    if(typeof(field4) == undefined){ field4 = ''; }
+                    // let tags = $row.attr('right-tags');
+                    if(field1 != ''){ field1 = field1.toLowerCase(); }
+                    if(field2 != ''){ field2 = field2.toLowerCase(); }
+                    if(field3 != ''){ field3 = field3.toLowerCase(); }
+                    if(field4 != ''){ field4 = field4.toLowerCase(); }
+                    let pos0 = field1.indexOf(input_search);
+                    let pos1 = field2.indexOf(input_search);
+                    let pos2 = field3.indexOf(input_search);
+                    let pos3 = field4.indexOf(input_search);
+                    let is = '';
+                    if((input_search != '') && (pos0 !== -1)){
+                        $row.removeClass('d-none');
+                    }else if((input_search != '') && (pos1 !== -1)){
+                        $row.removeClass('d-none');
+                    }else if((input_search != '') && (pos2 !== -1)){
+                        $row.removeClass('d-none');
+                    }else if((input_search != '') && (pos3 !== -1)){
+                        $row.removeClass('d-none');
+                    }else if(input_search == ''){
+                        $row.removeClass('d-none');
+                    }else{
+                        $row.addClass('d-none');
+                    }	
+                });			
+			})
+		},
+		doSearch:function(){
+			let self = this;
+			// let $form = self.instance.find('form');
+			// let form_data = $form.serializeArray();
+			
+			//-----
+			let params = {};
+			let $page = self.instance.find('[name="page"]');
+			let $page_size = self.instance.find('[name="page_size"]');
+			if($page.length > 0){ params['page'] = $page.val(); }
+			if($page_size.length > 0){ params['page_size'] = $page_size.val(); }
+			
+			//-----
+			let $status = self.instance.find('[name="select-status"]');
+			let status = $status.val();
+			let $category_id = self.instance.find('[name="select-category_id"]');
+			let category_id = $category_id.val();
+			let $search_keyword = self.instance.find('[name="input-search_keyword"]');
+			let search_keyword = $search_keyword.val();
+			params['select-status'] = status;
+			params['select-category_id'] = category_id;
+			params['input-search_keyword'] = search_keyword;
+			
+			//-----
+        	// __mm['content-datalist'].loading();
+		    let api = "/{{$htmlModule}}/{{$thisController}}/index";
+	        $.ajax({
+	            type: "post",
+	            url: api,
+	            data: params,
+	            dataType:'html',
+	            async: true,
+	            headers:__mm['ajax'].getHeaders(),
+	            success: function(data){
+	            	__mm['content-datalist'].html(data);
+	            },
+	            error: function(data){
+	            },
+	            done: function(data){
+	            },
+	        });
+		},
+	}
+	__this.init();
+}catch(e){
+	console.error(e);
+}
+</script>

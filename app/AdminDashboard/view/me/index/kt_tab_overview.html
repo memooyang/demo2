@@ -1,0 +1,49 @@
+
+<div class="row row-cols-1 row-cols-md-1 mb-6 mb-xl-9">
+	<div class="col">
+		<!--begin::Reward Tier-->
+		<?php if($rowUserPlan){ ?>
+		<a type="button" 
+		class="card card-flush h-xl-100" style="background-image:url('/images/full_stack/bg/0/1.png')"
+		--class="card bg-primary hoverable h-md-100"
+        --content-link
+        --this-url="/{{$thisModule}}/Plan"
+        >
+			<!--begin::Body-->
+			<div class="card-body">
+				<i class="ki-duotone ki-abstract-23 text-white fs-3x ms-n1">
+					<span class="path1"></span>
+					<span class="path2"></span>
+					<span class="path3"></span>
+				</i>
+				<div class="text-white fw-bold fs-1 mt-5">{{$rowUserPlan['plan_topic']}}</div>
+				<div class="fw-semibold text-white">{{$rowPlanOrder['topic']}}</div>
+			</div>
+			<!--end::Body-->
+		</a>
+		<!--end::Reward Tier-->
+		<?php }else{ ?>
+		<a type="button" 
+		class="card card-flush h-xl-100" style="background-image:url('/images/full_stack/bg/0/2.png')"
+		--class="card bg-gray-500 hoverable h-md-100"
+        content-link
+        this-url="/{{$thisModule}}/Plan"
+        >
+			<!--begin::Body-->
+			<div class="card-body">
+				<i class="ki-duotone ki-abstract-23 text-white fs-3x ms-n1">
+					<span class="path1"></span>
+					<span class="path2"></span>
+					<span class="path3"></span>
+				</i>
+				<div class="text-white fw-bold fs-1 mt-5">免費方案</div>
+				<div class="fw-semibold text-white"></div>
+			</div>
+			<!--end::Body-->
+		</a>
+		<!--end::Reward Tier-->
+		<?php } ?>
+	</div>
+	<div class="col">
+	</div>
+</div>

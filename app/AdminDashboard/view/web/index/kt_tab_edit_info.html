@@ -1,0 +1,181 @@
+<?php $_block_uniqid = uniqid(); ?>
+<div class="fs-1 mb-3"></div>
+<!--begin::Card-->
+<div class="card pt-4 mb-6 mb-xl-9"
+identity="{{$identity}}"
+block="{{$_block_uniqid}}"
+>
+	<!--begin::Card body-->
+	<div class="card-body pt-0 pb-5">
+		<!--begin::Form-->
+		<form class="form">
+			<input type="hidden" name="id" value="{{$row['id']}}" />
+			<!--begin::Row-->
+			<div class="row row-cols-1 row-cols-md-2 mt-5">
+				<!--begin::Col-->
+				<div class="col">
+					<?php
+					$_params = [];
+					$_params['row'] = $row;
+					$_params['topic'] = '後台系統名稱';
+					$_params['field'] = 'name';
+					$_params['placeholder'] = $_params['topic'];
+					?>
+					{{include file="../view/form/input/text/inline.html" /}}
+				</div>
+				<!--end::Col-->
+				<!--begin::Col-->
+				<div class="col">
+					<?php
+					$_params = [];
+					$_params['row'] = $row;
+					$_params['topic'] = '後台系統次名稱';
+					$_params['field'] = 'name_sub';
+					$_params['placeholder'] = $_params['topic'];
+					?>
+					{{include file="../view/form/input/text/inline.html" /}}
+				</div>
+				<!--end::Col-->
+			</div>
+			<!--end::Row-->
+			<!--begin::Input group-->
+			<?php
+			$_params = [];
+			$_params['row'] = $row;
+			$_params['topic'] = '後台系統郵件Email';
+			$_params['field'] = 'email';
+			$_params['placeholder'] = 'example@domain.com';
+			$_params['type'] = 'email';
+			?>
+			{{include file="../view/form/input/text/inline.html" /}}
+			<!--end::Input group-->
+			<!--begin::Row-->
+			<div class="row row-cols-1 row-cols-md-3 mt-5 twzipcode"
+			identity="{{$identity}}"
+			>
+				<!--begin::Col-->
+				<div class="col">
+					<?php
+					$_params = [];
+					$_params['row'] = $row;
+					$_params['topic'] = '縣市';
+					$_params['field'] = 'county';
+					$_params['data-role'] = $_params['field'];
+					$_params['id'] = $_params['field'];
+					?>
+					{{include file="../view/form/select/inline.html" /}}
+				</div>
+				<!--end::Col-->
+				<!--begin::Col-->
+				<div class="col">
+					<?php
+					$_params = [];
+					$_params['row'] = $row;
+					$_params['topic'] = '鄉鎮市區';
+					$_params['field'] = 'district';
+					$_params['data-role'] = $_params['field'];
+					$_params['id'] = $_params['field'];
+					?>
+					{{include file="../view/form/select/inline.html" /}}
+				</div>
+				<!--end::Col-->
+				<!--begin::Col-->
+				<div class="col">
+					<?php
+					$_params = [];
+					$_params['row'] = $row;
+					$_params['topic'] = '郵遞區號';
+					$_params['field'] = 'zipcode';
+					$_params['placeholder'] = $_params['topic'];
+					$_params['data-role'] = $_params['field'];
+					$_params['id'] = $_params['field'];
+					?>
+					{{include file="../view/form/input/text/inline.html" /}}
+				</div>
+				<!--end::Col-->
+			</div>
+			<!--end::Row-->
+			<!--begin::Input group-->
+			<?php
+			$_params = [];
+			$_params['row'] = $row;
+			$_params['topic'] = '街道地址';
+			$_params['field'] = 'address';
+			$_params['placeholder'] = $_params['topic'];
+			?>
+			{{include file="../view/form/input/text/inline.html" /}}
+			<!--end::Input group-->
+			
+			<div class="d-flex justify-content-end">
+				<!--begin::Button-->
+				{{include file="../view/form/button/use/btnSubmit.html" /}}
+				<!--end::Button-->
+			</div>
+		</form>
+		<!--end::Form-->
+	</div>
+	<!--end::Card body-->
+</div>
+<!--end::Card-->
+
+<script>
+try{
+	let __this = {
+		instance:null,
+		init:function(){
+			let self = this;
+			self.instance = $('[identity="{{$identity}}"][block="{{$_block_uniqid}}"]');
+			self.initAddress();
+			self.initBtnSubmit();
+		},
+	    initAddress:function(){
+	      let twzipcode = new TWzipcode('.twzipcode[identity="{{$identity}}"]');
+	      let zipcode = "{{$row['zipcode']}}";
+	      twzipcode.set(zipcode);
+	      let $block = $('.twzipcode[identity="{{$identity}}"]');
+	      $block.find('.select2-hidden-accessible').removeClass('select2-hidden-accessible');
+	      
+	    },
+		initBtnSubmit:function(){
+			let self = this;
+			self.instance.find('[btnSubmit]').on('click',function(){
+				let $form = $(this).closest('form');
+				let params = $form.serializeArray();
+				
+                //-----
+                let $row = self.instance.closest('[row]');
+                let user_id = $row.attr('this-id');
+                    
+				//-----
+			    let api = "/{{$apiModule}}/{{$thisController}}/Edit";
+		        $.ajax({
+		            type: "post",
+		            url: api,
+		            data: params,
+		            dataType:'json',
+		            async: true,
+            		headers:__mm['ajax'].getHeaders(),
+		            success: function(data){
+						self.data = data.data;
+						if (data.status == 'success') {
+							__plugins['alert'].success('更新成功');
+            				// __mm['content'].reload();
+						}else{
+							__plugins['alert'].error(data.message);
+						}
+		            },
+		            error: function(data){
+						console.error(data);
+						__plugins['alert'].error(data.message);
+		            },
+		            done: function(data){
+		            },
+		        });
+			})
+		},
+	}
+	__this.init();
+}catch(e){
+	console.error(e);
+}
+</script>

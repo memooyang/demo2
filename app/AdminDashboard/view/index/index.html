@@ -1,0 +1,49 @@
+{{include file="../layout/admin_dashboard/header/base-Admin.html" /}}
+
+<div 
+block="app"
+identity="{{$identity}}"
+>
+</div>
+
+<script>
+// try{
+//     let __this = {
+//         instance:null,
+//         init:function(){
+//             let self = this;
+//             // self.instance = $('[block="app"][identity="{{$identity}}"]');
+//             self.load();
+//         },
+//         load:function(){
+//             let self = this;
+//             let params = {};
+//             let api = "/dashboard/IndexHtml/index";
+//             $.ajax({
+//                 type: "post",
+//                 url: api,
+//                 data: params,
+//                 dataType:'html',
+//                 async: true,
+//                 headers:__mm['ajax'].getHeaders(),
+//                 success: function(data){
+//                     // self.instance.removeClass('d-none');
+//                     // self.instance.html(data);
+//                     __mm['content'].html(data);
+//                 },
+//                 error: function(data){
+//                 },
+//                 done: function(data){
+//                 },
+//             });
+//         },
+//     }
+//     $(function(){
+//         __this.init();
+//     });
+// }catch(e){
+//     console.error(e);
+// }
+</script>
+            
+{{include file="../layout/admin_dashboard/footer/base-Admin.html" /}}

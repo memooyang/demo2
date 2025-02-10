@@ -1,0 +1,153 @@
+
+<!--begin::Card-->
+<div class="card pt-4 mb-6 mb-xl-9"
+identity="{{$identity}}"
+block="kt_tab_edit_info"
+>
+	<!--begin::Card body-->
+	<div class="card-body pt-0 pb-5">
+		<!--begin::Form-->
+		<form class="form">
+			<input type="hidden" name="id" value="{{$row['id']}}" />
+			<!--begin::Input group-->
+			<?php
+			$_params = [];
+			$_params['row'] = $row;
+			$_params['topic'] = '主要標題';
+			$_params['field'] = 'title';
+			$_params['placeholder'] = '主要標題';
+			?>
+			{{include file="../view/form/input/text/inline.html" /}}
+			
+			<?php
+			$_params = [];
+			$_params['row'] = $row;
+			$_params['topic'] = '子標題';
+			$_params['field'] = 'title_sub';
+			$_params['placeholder'] = '子標題';
+			?>
+			{{include file="../view/form/input/text/inline.html" /}}
+			
+			<!--begin::Row-->
+			<div class="row row-cols-1 row-cols-md-1 mt-5">
+				<!--begin::Col-->
+				<div class="col">
+					<!--begin::Input group-->
+					<div class="fv-row mb-7">
+						<!--begin::Label-->
+						<label class="fs-6 fw-semibold mb-2">
+							<span class="required">分類</span>
+							<span class="ms-1" data-bs-toggle="tooltip" title="分類">
+								<i class="ki-duotone ki-information fs-7">
+									<span class="path1"></span>
+									<span class="path2"></span>
+									<span class="path3"></span>
+								</i>
+							</span>
+						</label>
+						<!--end::Label-->
+						<!--begin::Input-->
+						<select class="form-select form-select-solid fw-bold select2-hidden-accessible"
+						name="category_id"
+						identity="{{$identity}}"
+						>
+							<option value="0" 
+							>{{:__('無')}}</option>
+							<?php foreach($vars['rowsCategory'] as $category){ ?>
+							<option value="{{$category['id']}}" 
+							{{:_htmlToSelected($category['id'], $row['category_id'])}}
+							>{{$category['name']}}</option>
+							<?php } ?>
+						</select>
+						<!--end::Input-->
+					</div>
+					<!--end::Input group-->
+				</div>
+				<!--end::Col-->
+			</div>
+			<!--end::Row-->
+			
+			<?php
+			$_params = [];
+			$_params['row'] = $row;
+			$_params['topic'] = '關鍵字';
+			$_params['field'] = 'meta_keywords';
+			$_params['placeholder'] = '關鍵字';
+			?>
+			{{include file="../view/form/input/text/inline.html" /}}
+			
+			<?php
+			$_params = [];
+			$_params['row'] = $row;
+			$_params['topic'] = '描述';
+			$_params['field'] = 'meta_description';
+			$_params['placeholder'] = '描述';
+			?>
+			{{include file="../view/form/input/text/inline.html" /}}
+			
+			<div class="d-flex justify-content-end">
+				<!--begin::Button-->
+				{{include file="../view/form/button/use/btnSubmit.html" /}}
+				<!--end::Button-->
+			</div>
+		</form>
+		<!--end::Form-->
+	</div>
+	<!--end::Card body-->
+</div>
+<!--end::Card-->
+
+<script>
+try{
+	let __this = {
+		instance:null,
+		init:function(){
+			let self = this;
+			self.instance = $('[identity="{{$identity}}"][block="kt_tab_edit_info"]');
+			let select2_target = '[identity="{{$identity}}"][name="category_id"]';
+			__plugins['select2'].register(select2_target);
+			self.initBtnSubmit();
+		},
+		initBtnSubmit:function(){
+			let self = this;
+			self.instance.find('[btnSubmit]').on('click',function(){
+				let $form = $(this).closest('form');
+				let params = $form.serializeArray();
+				
+                //-----
+                let $row = self.instance.closest('[row]');
+                let user_id = $row.attr('this-id');
+                    
+				//-----
+			    let api = "/{{$apiModule}}/{{$thisController}}/Edit";
+		        $.ajax({
+		            type: "post",
+		            url: api,
+		            data: params,
+		            dataType:'json',
+		            async: true,
+            		headers:__mm['ajax'].getHeaders(),
+		            success: function(data){
+						self.data = data.data;
+						if (data.status == 'success') {
+							__plugins['alert'].success('更新成功');
+            				// __mm['content'].reload();
+						}else{
+							__plugins['alert'].error(data.message);
+						}
+		            },
+		            error: function(data){
+						console.error(data);
+						__plugins['alert'].error(data.message);
+		            },
+		            done: function(data){
+		            },
+		        });
+			})
+		},
+	}
+	__this.init();
+}catch(e){
+	console.error(e);
+}
+</script>

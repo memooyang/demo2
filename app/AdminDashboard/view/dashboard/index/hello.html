@@ -1,0 +1,139 @@
+<div class="card flex-grow-1 bgi-no-repeat bgi-size-contain bgi-position-x-end h-xl-100" 
+block="hero-hello"
+identity="{{$identity}}"
+style="
+background-color: #1c1c28;
+/*background-size: auto auto;*/
+">       
+    <!--begin::Body-->
+    <div class="card-body d-flex justify-content-between flex-column ps-xl-18"> 
+        <img class="d-block d-sm-none pe-5" 
+        --src="/images/theme/auth-bundle-pro/Easy/welcome.svg"
+        src="/images/theme/auth-bundle-pro/Ghost/welcome.svg"
+        style="
+        right:0px;
+        "
+        />
+        <img class="d-none d-sm-block pe-5" 
+        --src="/images/theme/auth-bundle-pro/Easy/welcome.svg"
+        src="/images/theme/auth-bundle-pro/Ghost/welcome.svg"
+        width="200"
+        style="
+        position:absolute;
+        right:0px;
+        "
+        />
+        <!--begin::Heading-->
+        <div class="mb-8 pt-xl-8">
+            <!--begin::Title-->
+            <h3 class="fw-bold text-white fs-3x mb-5 ms-n1">
+                {{$vars['hello']}}, {{$user['name']}}
+            </h3>
+            <!--end::Title--> 
+            
+            <!--begin::Description-->
+            <span class="fw-bold text-white fs-4 mb-8 d-block lh-0">
+                
+            </span>
+            <!--end::Description--> 
+
+            <!--begin::Items-->
+            <div class="d-flex align-items-center">
+                <!--begin::Item-->
+                <div class="d-flex align-items-center me-6">
+                    <!--begin::Icon-->
+                    <a href="#" class="me-2">
+                        <i class="ki-duotone ki-messages text-white fs-3">
+                         <span class="path1"></span>
+                         <span class="path2"></span>
+                         <span class="path3"></span>
+                         <span class="path4"></span>
+                         <span class="path5"></span>
+                         <span class="path6"></span>
+                        </i>    
+                        <!--begin::Info--> 
+                        <span class="fw-semibold text-white fs-2" totalNewMessages>您有 0 則新的訊息！</span>
+                        <!--end::Info--> 
+                    </a>
+                    <!--end::Icon-->
+
+                </div>
+                <!--end::Item-->   
+                 
+                <!--begin::Item
+                <div class="d-flex align-items-center">
+                    <a href="#" class="me-2">
+                        <i class="bi bi-headset text-primary fs-3"></i>
+                    </a>
+                    <span class="fw-semibold text-white fs-6">372 listening now</span>
+                </div>
+                -->
+                <!--end::Item--> 
+            </div>
+            <!--end::Items-->  
+        </div>
+        <!--end::Heading-->  
+        
+        <!--begin::Action--> 
+        
+        <!--begin::Action-->
+    </div>
+    <!--end::Body-->
+</div>
+
+
+<script>
+try{
+    let __this = {
+        instance:null,
+        init:function(){
+            let self = this;
+            self.instance = $('[block="hero-hello"][identity="{{$identity}}"]');
+        },
+        load:function(){
+            let self = this;
+            self.instance.find('[btnSubmit]').on('click',function(){
+                let $form = $(this).closest('form');
+                // let params = $form.serializeArray();
+            
+                //-----
+                let $type = $form.find('[name="type"]');
+                let $topic = $form.find('[name="topic"]');
+                let type = $type.val();
+                let topic = $topic.val();
+                let memo = __plugins['ckeditor-rich-full'].getData('memo');
+                
+                //-----
+                let params = {};
+                params['type'] = type;
+                params['topic'] = topic;
+                params['memo'] = memo;
+                console.log(params);
+                
+                //-----
+                //totalNewMessages
+                let api = "/{{$apiModule}}/Dashboard/Hello";
+                $.ajax({
+                    type: "post",
+                    url: api,
+                    data: params,
+                    dataType:'json',
+                    async: true,
+                    headers:__mm['ajax'].getHeaders(),
+                    success: function(data){
+                    },
+                    error: function(data){
+                        console.error(data);
+                        __plugins['alert'].error(data.message);
+                    },
+                    done: function(data){
+                    },
+                });
+            })
+        },
+    }
+    __this.init();
+}catch(e){
+    console.error(e);
+}
+</script>

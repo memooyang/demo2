@@ -1,0 +1,103 @@
+<?php if($row){ ?>
+<!--begin::Layout-->
+<div class="d-flex flex-column flex-xl-row-- flex-sm-row "
+identity="{{$identity}}"
+row="{{$row['id']}}"
+this-id="{{$row['id']}}"
+>
+	<!--begin::Sidebar-->
+	<div class="flex-column flex-sm-row-auto w-100 w-xl-250px mb-10">
+		<!--begin::Card-->
+		<div class="card card-reset mb-5 mb-xl-1">
+			<!--begin::Card body-->
+			<div class="card-body pt-0">
+				<!--begin::Summary-->
+				<div class="p-0">
+					<?php 
+					$_params = [];
+					$_params['row'] = $row;
+					$_params['topic'] = '圖片';
+					$_params['field'] = 'image';
+					$_params['ref_type'] = 'Posts';
+					$_params['category'] = $_params['ref_type'];
+					$_params['css_class'] = 'rounded';
+					//$_params['tip_text'] = '圖片尺寸(90:54)';
+					//$_params['width'] = 150;
+					//$_params['height'] = 100;
+					//$_params['block_width'] = 150;
+					//$_params['value'] = $row['__CLIENT_IMAGE__'][$_params['field']];
+					?>
+					{{include file="../view/form/upload/image/inline-free.html" /}}
+
+				</div>
+				<!--end::Summary-->
+				<!--
+				<div class="separator separator-dashed my-3"></div>
+				-->
+			</div>
+			<!--end::Card body-->
+		</div>
+		<!--end::Card-->
+		
+		{{include file="posts/Edit/kt_tab_switch" /}}
+	</div>
+	<!--end::Sidebar-->
+	<!--begin::Content-->
+	<div class="flex-lg-row-fluid ms-lg-15">
+		<!--begin:::Tabs-->
+		<ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-8">
+			<!--begin:::Tab item-->
+			<li class="nav-item">
+				<a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab" href="#kt_tab_edit_info">	資訊設定
+				</a>
+			</li>
+			<!--end:::Tab item-->
+			<!--begin:::Tab item-->
+			<li class="nav-item">
+				<a class="nav-link text-active-primary pb-4 " data-bs-toggle="tab" href="#kt_tab_edit_content">	內容
+				</a>
+			</li>
+			<!--end:::Tab item-->
+		</ul>
+		<!--end:::Tabs-->
+		<!--begin:::Tab content-->
+		<div class="tab-content" id="myTabContent">
+			<!--begin:::Tab pane-->
+			<div class="tab-pane fade show active" id="kt_tab_edit_info" role="tabpanel">
+				{{include file="posts/Edit/kt_tab_edit_info" /}}
+			</div>
+			<!--end:::Tab pane-->
+			<!--begin:::Tab pane-->
+			<div class="tab-pane fade" id="kt_tab_edit_content" role="tabpanel">
+				{{include file="posts/Edit/kt_tab_edit_content" /}}
+			</div>
+			<!--end:::Tab pane-->
+		</div>
+		<!--end:::Tab content-->
+	</div>
+	<!--end::Content-->
+</div>
+<!--end::Layout-->
+
+<?php } ?>
+
+<script>
+try{
+	let __this = {
+		instance:null,
+		init:function(){
+			let self = this;
+			self.instance = $('[row][identity="{{$identity}}"]');
+            self.initHeader();
+        },
+        initHeader:function(){
+            __mm['header'].setTitle('{{$thisTitle}}', '{{$thisUrl}}');
+            __mm['header'].setBackTitle('', '{{$thisBackUrl}}');
+            // __mm['header'].setBackContent2to1();
+        },
+	}
+	__this.init();
+}catch(e){
+	console.error(e);
+}
+</script>
