@@ -12,9 +12,6 @@ class StarTotal extends \AdminApi\Index\Base
         $web = \Web::data();
         $user = \Web::user();
         $school = \School::data();
-        // _test($web);
-        // _test($user);
-        // _test($school);
         if(empty($web)){ throw new \Exception('尚未登入'); }
         if(empty($user)){ throw new \Exception('尚未登入'); }
         if(empty($school)){ throw new \Exception('尚未登入'); }

@@ -16,10 +16,6 @@ class Edit extends \AdminApi\Users\Base
         $id = $this->params['id']??'';
         if(empty($id)){ throw new \Exception('沒有對應的資料'); }
         
-        // //-----
-        // $topic = $this->params['topic']??'';
-        // if(empty($topic)){ throw new \Exception('請輸入標題'); }
-        
         //-----
         $this->initAndCheck($id);
         $dataset = $this->params;

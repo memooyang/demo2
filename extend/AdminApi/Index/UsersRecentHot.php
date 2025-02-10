@@ -15,7 +15,6 @@ class UsersRecentHot extends \AdminApi\Index\Base
         if(empty($user)){ throw new \Exception('尚未登入'); }
         
         //-----
-        //SELECT * FROM `lohasys_users` WHERE `web_id` = 1 AND `is_remove` = 0 AND `created_at` >= '2024-12-01 12:08:32' ORDER BY `id` DESC
         $recent_at = \Helper\Date\Sub::day(14, _date());
         $rdb = new \Rdb\Users();
         $map = \RdbCondition\Web::init();

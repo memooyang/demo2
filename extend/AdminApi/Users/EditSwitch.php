@@ -17,7 +17,6 @@ class EditSwitch extends \AdminApi\Users\Base
         if(empty($id)){ throw new \Exception('沒有對應的資料'); }
         
         //-----
-        // $this->params['is_lock'] = $this->params['is_lock']??'0';
         $this->params['status'] = $this->params['status']??'0';
         $this->params['is_reject_receive_any_notifications'] = $this->params['is_reject_receive_any_notifications']??'0';
         

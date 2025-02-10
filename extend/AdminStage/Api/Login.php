@@ -19,13 +19,6 @@ class Login extends \AdminStage\Base
         if(empty($username)){ throw new \Exception('請輸入帳戶'); }
         if(empty($password)){ throw new \Exception('請輸入密碼'); }
         
-        //-----captcha
-        // $captcha_value = $this->params['captcha']??null;
-        // if(empty($captcha_value)){ throw new \Exception('請輸入驗證碼'); }
-        // if (captcha_check($captcha_value, false)){
-        //     throw new \Exception('驗證碼錯誤!');
-        // }
-        
         //-----ORM
         $rdb = new \Rdb\AdminUsers();
         $map = [];
