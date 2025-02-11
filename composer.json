@@ -1,0 +1,75 @@
+{
+    "name": "topthink/think",
+    "description": "the new thinkphp framework",
+    "type": "project",
+    "keywords": [
+        "framework",
+        "thinkphp",
+        "ORM"
+    ],
+    "homepage": "https://www.thinkphp.cn/",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "liu21st",
+            "email": "liu21st@gmail.com"
+        },
+        {
+            "name": "yunwuxin",
+            "email": "448901948@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.0.0",
+        "topthink/framework": "^8.0",
+        "topthink/think-orm": "^3.0|^4.0",
+        "topthink/think-filesystem": "^2.0",
+        "topthink/think-captcha": "^3.0",
+        "topthink/think-template": "^3.0",
+        "topthink/think-view": "^2.0",
+        "topthink/think-worker": "^4.0",
+        "workerman/workerman": "^3.5",
+        "topthink/think-migration": "^3.1",
+        "topthink/think-multi-app": "^1.1",
+        "topthink/think-angular": "^3.0",
+        "topthink/think-helper": "^3.1",
+        "firebase/php-jwt": "^6.10",
+        "topthink/think-log": "^2.0",
+        "sendgrid/sendgrid": "~7",
+        "parsecsv/php-parsecsv": "^1.3",
+        "shuchkin/simplexlsx": "^1.1",
+        "cloudinary/cloudinary_php": "^2",
+        "mailjet/mailjet-apiv3-php": "^1.6",
+        "twilio/sdk": "^8.1",
+        "phpoption/phpoption": "^1.9",
+        "phpoffice/phpspreadsheet": "^3.8",
+        "phpmailer/phpmailer": "^6.9",
+        "mailgun/mailgun-php": "^4.3",
+        "symfony/http-client": "^7.2",
+        "nyholm/psr7": "^1.8",
+        "google/apiclient": "^2.15.0"
+    },
+    "require-dev": {
+        "symfony/var-dumper": ">=4.2",
+        "topthink/think-trace": "^1.0"
+    },
+    "autoload": {
+
+    },
+    "config": {
+        "preferred-install": "dist",
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    },
+    "scripts": {
+        "pre-autoload-dump": "Google\\Task\\Composer::cleanup"
+
+    },
+    "extra": {
+        "google/apiclient-services": [
+            "Drive",
+            "YouTube"
+        ]
+    }
+}
